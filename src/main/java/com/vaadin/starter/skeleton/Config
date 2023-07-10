@@ -1,0 +1,60 @@
+package com.vaadin.starter.skeleton;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+public class Config {
+
+    static int portNumber;
+    static String userName;
+    static String passWord;
+    static String dbURL;
+
+    static String requestUrl;
+
+    public Config() {
+        try (InputStream input = Main.class.getClassLoader().getResourceAsStream("config.properties")) {
+
+            Properties prop = new Properties();
+
+            if (input == null) {
+                System.out.println("unable to find config.properties");
+                return;
+            }
+
+            // load a properties file from class path, inside static method
+            prop.load(input);
+
+            // get the property value and print it out
+            portNumber = Integer.parseInt(prop.getProperty("app.port"));
+            userName = prop.getProperty("db.username");
+            passWord = prop.getProperty("db.password");
+            dbURL = prop.getProperty("db.url");
+            requestUrl=prop.getProperty("request.url");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public int getPortNumber() {
+        return portNumber;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getPassword() {
+        return passWord;
+    }
+
+    public String getDBURL() {
+        return dbURL;
+    }
+
+    public String getRequestURL(){
+        return requestUrl;
+    }
+}
